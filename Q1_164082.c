@@ -57,7 +57,7 @@ void *Minimum(){
 
 
 
-int main(){
+int main(int argc, char *argv[]){
 
 int n, i;
 
@@ -66,13 +66,13 @@ pthread_t t2;
 pthread_t t3;
 
 
-	n = pthread_create(&t1,NULL,&average,NULL);
-	pthread_join(t1,NULL);
+	n = pthread_create(&t1, NULL, &average, &argv);
+	pthread_join(t1, NULL);
 
-	n = pthread_create(&t2,NULL,&Minimum,NULL);
-	pthread_join(t2,NULL);
+	n = pthread_create(&t2, NULL, &Minimum, NULL);
+	pthread_join(t2, NULL);
 
-    n = pthread_create(&t3,NULL,&maximum,NULL);
-	pthread_join(t3,NULL);
+    n = pthread_create(&t3, NULL, &maximum, NULL);
+	pthread_join(t3, NULL);
 
 }
