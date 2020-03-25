@@ -35,13 +35,29 @@ void *maximum(void* param){
   Args *test =(Args*) param;
 
   for(int i=1; i<test->length; i++){
-       cout<<test->array[i]<<endl;
-       avg = avg + atoi(test->array[i]);
+      if(atoi(test->array[i]) > max){
+        max = atoi(test->array[i]);
+      }
   }
-  test->length = test->length-1;
-  avg = avg/test->length;
+  
+  test->length = max;
 
-  test->length = avg;
+  pthread_exit( (void*) test);
+
+}
+
+void *Minimum(void* param){
+
+  int min = 10000;
+  Args *test =(Args*) param;
+
+  for(int i=1; i<test->length; i++){
+      if(atoi(test->array[i]) < min){
+        min = atoi(test->array[i]);
+      }
+  }
+  
+  test->length = min;
 
   pthread_exit( (void*) test);
 
@@ -61,9 +77,17 @@ int main(int argc, char** argv){
 
   pthread_t id;
   Args argue;
+  Args argue2;
+  Args argue3;
 
   argue.array = argv;
   argue.length = argc;
+
+  argue2.array = argv;
+  argue2.length = argc;
+
+  argue3.array = argv;
+  argue3.length = argc;
 
   if (pthread_create(&id, NULL, &Average, &argue)==-1){           //Average
 
@@ -79,7 +103,7 @@ int main(int argc, char** argv){
 
 
 
-  if (pthread_create(&id, NULL, &Maximum, &argue)==-1){           //Maximum
+  if (pthread_create(&id, NULL, &maximum, &argue2)==-1){           //Maximum
 
       cout<<"Thread Creation Failed!"<<endl;
       return 1;
@@ -92,16 +116,16 @@ int main(int argc, char** argv){
 
 
 
-  // if (pthread_create(&id, NULL, &Minimum, &argue)==-1){           //Minimum
+  if (pthread_create(&id, NULL, &Minimum, &argue3)==-1){           //Minimum
 
-  //     cout<<"Thread Creation Failed!"<<endl;
-  //     return 1;
-  // }
+      cout<<"Thread Creation Failed!"<<endl;
+      return 1;
+  }
 
-  // Args *min;
-  // pthread_join(id, (void**) &min);
-  // cout<<"\nMinimum is = "<<min->length;
-
+  Args *min;
+  pthread_join(id, (void**) &min);
+  cout<<"\nMinimum is = "<<min->length;
+  cout<<endl;
 }
 
 
