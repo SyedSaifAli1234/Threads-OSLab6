@@ -10,42 +10,46 @@ struct Args{
 
 };
 
-int k = 0;
+int k = 2;
+int c = 2;
 int arr[20];
 
-int fibonacci (int x){
-	arr[k] = x;
-	k++;
-    if (x <= 1) {
-        return 1;
-    }
-    return fibonacci(x-1) + fibonacci(x-2);
-}
-
+int fib (int x);
 
 void* Fibonacci(void* param){
-  int num = 0;
-  int sum = 0;
-  
-  Args *test =(Args*) param;
 
-  sum = fibonacci(test->number);
+	cout<<"Inside thread"<<endl;
+	int num = 0;
+	Args *test =(Args*) param;
 
-  for(int i = 0; i<k; i++){
-  	cout<<"array[i] = "<<arr[i]<<endl;
-  }
-  test->number = sum;
-  cout<<endl;
-  
-  pthread_exit( (void*) test);
-  // or u can use: return (void*) updatedStudent; 
-  //do not use exit routine, it will terminate the whole process
+    c = fib(test->number);
 
+
+	for(int i = 0; i < c; i++){
+		cout<<"array[i] = "<<arr[i]<<endl;
+	}
+
+	cout<<endl;
+  	pthread_exit( (void*) test);
 }
 
 
+int fib (int x){
+	
+	cout<<"Inside fib"<<endl;
+	arr[0] = 0;
+	arr[1] = 1;
 
+	cout<<"X = "<<x<<endl;
 
+	while(k <= x){
+		arr[k] = arr[k-2] + arr[k-1];
+		k++;
+	}
+
+	arr[k] = arr[k-2] + arr[k-1];
+	return k;
+}
 
 
 
@@ -66,7 +70,7 @@ int main(int argc, char** argv){
 
 
 	for(int i=0; i< argc-1; i++){
-		usleep(100000);
+		usleep(1000);
 		if (pthread_create(&id, NULL, &Fibonacci, &argue[i])==-1){      //For loop to create
 			cout<<"Thread Creation Failed!"<<endl;						//threads.
 	     	return 1;
@@ -74,8 +78,8 @@ int main(int argc, char** argv){
 	  	Args *fib;
 		pthread_join(id, (void**) &fib);
 	
-		cout<<"Fibonacci series by Thread "<<i<<" = "; 
-		cout<<fib->number;
+		// cout<<"Fibonacci series by Thread "<<i<<" = "; 
+		// cout<<fib->number;
 	}
 
 	
