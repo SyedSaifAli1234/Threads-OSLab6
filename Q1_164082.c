@@ -10,10 +10,10 @@ int i = 0;
 void *average(void* param){
 
 
-	char a[10] = *(char*) param;
- 	char *new_ptr = new int; 
- 	*new_ptr = a;
- 	printf("%s\n", *new_ptr);
+	char *a[50] = *param;
+ 	// char *new_ptr;
+ 	// *new_ptr = a;
+ 	printf("%s\n", a);
 	// int *new_ptr=new int; 
 	// *new_ptr=a;
 	// (*new_ptr)++;
