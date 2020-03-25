@@ -1,90 +1,48 @@
-#include <stdio.h>
-#include <pthread.h>
+#include <iostream>
+using namespace std;
 #include <string.h>
 
+struct Args
+{
+   int length;
+   char ** array;
 
-int arr[50];
-int n = 0;
-int i = 0;
+};
 
-void *average(void* param){
+void* myFunc(void* param)
+{
+  char *arr = new char;
+  char *student=(char*) param;
+   
+  Student updatedStudent
+  strcpy(arr, student);
+  updatedStudent->rollNumber=10;
 
-
-	char *a[50] = *param;
- 	// char *new_ptr;
- 	// *new_ptr = a;
- 	printf("%s\n", a);
-	// int *new_ptr=new int; 
-	// *new_ptr=a;
-	// (*new_ptr)++;
-
- // 	pthread_exit( (void*) new_ptr);
-
-	// int sum = 0;
-	// float avg = 0;
-
-	// printf("Input number ");
-	// scanf("%d", &n);
-
-	// for(i = 0; i < n; i++){
-	// 	scanf("%d", &arr[i]);
-	// }
-
-	// for(i = 0; i<n; i++){
-	// 	sum=sum+arr[i];
-	// }
-
-	// avg = sum/n;
-
-	// printf("The average  is : %f",avg);
-}
-
-void *maximum(){
-	
-	int temp=arr[0];
-	int i;
-
-	for( i=1;i<n;i++){
-		if(temp<arr[i]){
-			temp=arr[i];
-		}
-	}
-	printf("\nThe Maximum  is : %d",temp);	
-}
-
-void *Minimum(){
-	
-	int i;
-	int temp=arr[0];
-
-	for( i=1;i<n;i++){
-		if(temp>arr[i]){
-			temp=arr[i];
-		}
-	}
-
-	printf("\nThe Minimum  is :%d",temp);
+  pthread_exit( (void*) updatedStudent);
+  // or u can use: return (void*) updatedStudent; 
+  //do not use exit routine, it will terminate the whole process
 
 }
 
 
-
-int main(int argc, char *argv[]){
-
-int n, i;
-
-pthread_t t1;
-pthread_t t2;
-pthread_t t3;
+int main()
+{
 
 
-	n = pthread_create(&t1, NULL, &average, &argv);
-	pthread_join(t1, NULL);
+  pthread_t id;
+  Args argue;
 
-	//n = pthread_create(&t2, NULL, &Minimum, NULL);
-	//pthread_join(t2, NULL);
+  strcpy(std.name, "abc");
+  std.rollNumber=1;
+ 
+  if (pthread_create(&id, NULL, &myFunc, &std)==-1)
+  {
+      cout<<"Thread Creation Failed!"<<endl;
+      return 1;
+  }
+  
 
-    //n = pthread_create(&t3, NULL, &maximum, NULL);
-	//pthread_join(t3, NULL);
-
+  Student *updatedStd;
+  pthread_join(id, (void**) &updatedStd);
+  cout<<updatedStd->rollNumber;
 }
