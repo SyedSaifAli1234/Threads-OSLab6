@@ -2,15 +2,15 @@
 using namespace std;
 #include <string.h>
 
-struct Args
-{
+struct Args{
+
    int length;
    char ** array;
 
 };
 
-void* myFunc(void* param)
-{
+void* myFunc(void* param){
+
   char *arr = new char;
   char *student=(char*) param;
    
@@ -25,8 +25,7 @@ void* myFunc(void* param)
 }
 
 
-int main()
-{
+int main(int argc, char** argv[]){
 
 
   pthread_t id;
@@ -35,8 +34,8 @@ int main()
   strcpy(std.name, "abc");
   std.rollNumber=1;
  
-  if (pthread_create(&id, NULL, &myFunc, &std)==-1)
-  {
+  if (pthread_create(&id, NULL, &myFunc, &std)==-1){
+    
       cout<<"Thread Creation Failed!"<<endl;
       return 1;
   }
