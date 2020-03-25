@@ -10,7 +10,12 @@ struct Args{
 
 };
 
+int k = 0;
+int arr[20];
+
 int fibonacci (int x){
+	arr[k] = x;
+	k++;
     if (x <= 1) {
         return 1;
     }
@@ -26,6 +31,9 @@ void* Fibonacci(void* param){
 
   sum = fibonacci(test->number);
 
+  for(int i = 0; i<k; i++){
+  	cout<<"array[i] = "<<arr[i]<<endl;
+  }
   test->number = sum;
   cout<<endl;
   
@@ -44,7 +52,7 @@ void* Fibonacci(void* param){
 
 
 int main(int argc, char** argv){
-
+	cout<<endl;
 	pthread_t id;
 	Args argue[argc];
 	int j = 1;
