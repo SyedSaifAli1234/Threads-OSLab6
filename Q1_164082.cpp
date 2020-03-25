@@ -11,19 +11,19 @@ struct Args{
 
 void* myFunc(void* param){
 
-  Args *try=(Args*) param;
-   
-  Args *argue2=new Args;
-  argue2 = try;
+  Args *test =(Args*) param;
 
-  pthread_exit( (void*) argue2);
+  for(int i=1; i<test->length; i++) 
+       cout<<test->array[i]<<endl;
+
+  pthread_exit( (void*) test);
   // or u can use: return (void*) updatedStudent; 
   //do not use exit routine, it will terminate the whole process
 
 }
 
 
-int main(int argc, char** argv[]){
+int main(int argc, char** argv){
 
 
   pthread_t id;
@@ -41,4 +41,6 @@ int main(int argc, char** argv[]){
 
   Args *argue2;
   pthread_join(id, (void**) &argue2);
+
+  cout<<"\nThread exiting\n";
 }
