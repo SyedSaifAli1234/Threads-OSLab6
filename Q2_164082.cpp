@@ -36,13 +36,13 @@ int fib (int x){
 	arr[0] = 0;
 	arr[1] = 1;
 
-	while(arr[k-1] <= x){
+	while(arr[k-1] < x){
 		arr[k] = arr[k-2] + arr[k-1];
 		k++;
-		c++;
 	}
-
-	arr[k] = arr[k-2] + arr[k-1];
+	if(arr[k-1] != x){
+		arr[k] = arr[k-2] + arr[k-1];
+	}
 	return k;
 }
 
@@ -72,15 +72,11 @@ int main(int argc, char** argv){
 	  	}
 	  	Args *fib;
 		pthread_join(id, (void**) &fib);
-		cout<<"Thread "<<i<<" finished"<<endl;
+		cout<<endl<<endl;
 		// cout<<"Fibonacci series by Thread "<<i<<" = "; 
 		// cout<<fib->number;
 	}
 
-	
-	
-
-	cout<<"exiting function"<<endl;
 }
 
 
