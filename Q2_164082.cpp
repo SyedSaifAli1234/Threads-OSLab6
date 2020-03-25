@@ -1,47 +1,75 @@
-#include "pthread.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+using namespace std;
+#include <string.h>
 
-int sum;
-void *runner(void *param);
+struct Args{
 
-int main(int argc, char *argv[])
-{
-int count, i;
-pthread_attr_t attr;
+   int number;
 
-if (argc != 2) {
-fprintf(stderr,"usage: pthreads <integer value>\n");
-return -1;
+};
+
+void* Fibonacci(void* param){
+  int num = 0;
+  Args *test =(Args*) param;
+
+  for(int i=1; i<test->length; i++){
+
+       avg = avg + atoi(test->array[i]);
+
+  }
+
+  test->length = test->length-1;
+  avg = avg/test->length;
+
+  test->length = avg;
+
+  pthread_exit( (void*) test);
+  // or u can use: return (void*) updatedStudent; 
+  //do not use exit routine, it will terminate the whole process
+
 }
 
-count = atoi(argv[1]);
 
-if (count < 1) {
-fprintf(stderr,"%d must be>= 1\n", count);
-return -1;
+
+
+
+
+
+
+
+int main(int argc, char** argv){
+
+	pthread_t id;
+	Args argue[argc];
+	int j = 1;
+
+	for(int i=0; i< argc-1; i++){											//Assigning values
+		argue[i].array = *argv[j];
+		j++;
+	}
+
+
+	for(int i=0; i< argc-1; i++){
+		if (pthread_create(&id, NULL, &Fibonacci, &argue[i])==-1){      //For loop to create
+			cout<<"Thread Creation Failed!"<<endl;						//threads.
+	     	return 1;
+	  	}
+
+	  	Args *fib;
+		pthread_join(id, (void**) &fib);
+		
+		cout<<"Fibonacci series by Thread "<<i<<" = "; 
+		for(int i = 0; i < argc; i++){
+			cout<<fib->array[i];
+		}
+	}
 }
 
-pthread_attr_init(&attr);
 
-for(i=1;i<=count;i++){
-pthread_t thread;
-pthread_create(&thread,&attr,runner,(void*)i);
-pthread_join(thread,NULL);
-printf("fib of %d is %d\n", i, sum);
-}
-}
 
-void *runner(void *param)
-{
-sum = fibonacci((int)param);
-pthread_exit(0);
-}
 
-int fibonacci (int x)
-{
-    if (x <= 1) {
-        return 1;
-    }
-    return fibonacci(x-1) + fibonacci(x-2);
-}
+
+
+
+
+
